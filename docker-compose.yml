@@ -3,25 +3,25 @@ services:
     frontend:
         image: frontend:0.0.1
         build: ./frontend
-        depends_on:
-            - reverse-proxy
 #        ports:
 #            -   "8080:8080"
         restart: always
 
     backend:
         image: backend:0.0.1
-        build:
-            context: ./backend
-        depends_on:
-            - reverse-proxy
+        build: ./backend
 #        ports:
 #            -   "3000:3000"
         restart: always
 
     reverse-proxy:
-        image: reverse-proxy:0.0.1
+        image: nginx:alpine
         build: ./reverse-proxy
+        volumes:
+            - ./reverse-proxy/nginx.conf:/etc/nginx/nginx.conf
         ports:
             - "8111:8111"
+        depends_on:
+            - frontend
+            - backend
         restart: always

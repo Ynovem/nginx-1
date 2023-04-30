@@ -1,8 +1,8 @@
 FROM node:lts-alpine
 
-WORKDIR /app
+WORKDIR /app/server
 
-COPY package*.json ./
+COPY package*.json .
 RUN npm ci
 COPY . .
 
